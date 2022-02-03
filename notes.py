@@ -6,8 +6,68 @@ use the above link as a tutorial
 
 """
 
-playas="losers.txt"
+import pandas as pd
 
+d="C:\\Users\\jonny\\Documents\\GitHub\\stars\\Stars\\"
+
+f1="allplayers.csv"
+
+df=pd.read_csv(d+f1)
+
+#clean the data
+#####################################################
+#                                                   #
+#git rid of $ and convert to float                  #
+#convert hands to int                               #
+#replace '-' vpip with 0                            #
+#replace '-' AF and AFq with 0                      #
+#                                                   #
+#####################################################
+
+df['My C Won']=df['My C Won'].str.replace('$','')
+df['My C Won']=df['My C Won'].astype(float)
+
+df['VPIP']=df['VPIP'].str.replace('-','0')
+df['VPIP']=df['VPIP'].astype(float)
+
+df['Hands']=df['Hands'].str.replace(',','')
+df['Hands']=df['Hands'].astype(int)
+df['Total AF']=df['Total AF'].str.replace('-','0')
+df['Total AF']=df['Total AF'].astype(float)
+df['Total AFq']=df['Total AFq'].str.replace('-','0')
+df['Total AFq']=df['Total AFq'].astype(float)
+df['BB/100']=df['BB/100'].str.replace(',','')
+df['BB/100']=df['BB/100'].astype(float)
+
+summary=df.describe()
+print(summary.keys())
+print(summary['My C Won'])
+#players  played the most hands:
+topTenPlayers=df[df['Hands']>30000]
+topTenPlayers=topTenPlayers.sort_values('BB/100',axis=0,ascending=False)
+print(topTenPlayers.describe())
+print(topTenPlayers)
+
+#write the clean data to a file
+df.to_csv("cleanedPokerData.csv")
+
+dfWinners=df[df['My C Won']>25]
+dfLosers=df[df['My C Won']< -25]
+
+dfWinners.to_csv("winners.csv")
+dfLosers.to_csv("losers.csv")
+
+#get the list of losers
+winners=list(dfWinners.iloc[:,0])
+losers=list(dfLosers.iloc[:,0])
+
+index=1627255667
+for name in losers:
+    print("<note player=\"" + name)
+          #\" label=\"0\" update=\"" + str(index) + \"""></note>\n")
+    index +=1
+
+'''
 index=1627255667
 donors= "<note player=\"Artishell\" label=\"0\" update=\"" + str(index) + "\"></note>\n"
 player = "Artishell"
@@ -21,3 +81,5 @@ for line in range(5):
     
 
 F.close()
+
+'''
