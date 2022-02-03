@@ -5,6 +5,9 @@ write to the pokerstars notes.xml
 use the above link as a tutorial
 
 """
+
+playas="losers.txt"
+
 index=1627255667
 donors= "<note player=\"Artishell\" label=\"0\" update=\"" + str(index) + "\"></note>\n"
 player = "Artishell"
