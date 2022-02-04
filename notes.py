@@ -61,15 +61,49 @@ dfLosers.to_csv("losers.csv")
 winners=list(dfWinners.iloc[:,0])
 losers=list(dfLosers.iloc[:,0])
 
+#print a players stats
+dfLosers[dfLosers['Player']=="ZZZPredator"]
+
+#how many players have VPIP > 40
+vp40=df[df["VPIP"]>40]
+vp40=vp40[vp40["Hands"]>1500]
+vp40.to_csv("vp40plus.csv")
+#how many players have VPIP < 20
+vp20=df[df["VPIP"]<20]
+vp20=vp20[vp20["Hands"]>500]
+vp20.to_csv("vp20minus.csv")
+
+
+F=open("Losernotes.txt","a")
 index=1627255667
+line=""
 for name in losers:
-    print("<note player=\"" + name)
+    line +="<note player=\"" + name + "\" label=\"0\" update=\"" + str(index) + "\"></note>\n"
           #\" label=\"0\" update=\"" + str(index) + \"""></note>\n")
     index +=1
+F.writelines(line)
+F.close()
+
+F=open("Winnernotes.txt","a")
+line=""
+for name in winners:
+    line +="<note player=\"" + name + "\" label=\"6\" update=\"" + str(index) + "\"></note>\n"
+          #\" label=\"0\" update=\"" + str(index) + \"""></note>\n")
+    index +=1
+F.writelines(line)
+F.close()
+
+
+
+
+
+
+
+
 
 '''
 index=1627255667
-donors= "<note player=\"Artishell\" label=\"0\" update=\"" + str(index) + "\"></note>\n"
+donors= "<note player=\"Artishell\" label=\"0\" update=\"" + str(index) + "\"><\\note>\n"
 player = "Artishell"
 
 F = open("note.xml","a")
