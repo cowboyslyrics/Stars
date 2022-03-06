@@ -11,7 +11,7 @@ import numpy as np
 
 d="C:\\Users\\jonny\\Documents\\GitHub\\stars\\Stars\\"
 
-f1="allplayers.csv"
+f1="thisMonth.csv"
 
 df=pd.read_csv(d+f1)
 
@@ -28,7 +28,7 @@ df=pd.read_csv(d+f1)
 df['My C Won']=df['My C Won'].str.replace('$','')
 df['My C Won']=df['My C Won'].astype(float)
 
-df['VPIP']=df['VPIP'].str.replace('-','0')
+#df['VPIP']=df['VPIP'].str.replace('-','0')
 df['VPIP']=df['VPIP'].astype(float)
 
 df['Hands']=df['Hands'].str.replace(',','')
@@ -46,10 +46,10 @@ print(topTenPlayers.describe())
 print(topTenPlayers)
 
 #write the clean data to a file
-df.to_csv("cleanedPokerData.csv")
+df.to_csv("cleanedPokerData2.csv")
 
-dfWinners=df[df['My C Won']>25]
-dfLosers=df[df['My C Won']< -25]
+dfWinners=df[df['BB/100']>3.9]
+dfLosers=df[df['BB/100']<  -1.0]
 
 dfWinners.to_csv("winners.csv")
 dfLosers.to_csv("losers.csv")
